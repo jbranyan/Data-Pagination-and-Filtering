@@ -1,15 +1,15 @@
 /*
 Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
-*/
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
+Author: Julie Branyan
 */
 
-const displayStudents = (list, page) =>{
-   const startIndex = (page * list.length) - list.length;
-   const endIndex = page * list.length;
+/*
+This function will create and insert/append the elements needed to display a "page" of nine students
+*/
+const showPage = (list, page) =>{
+   const startIndex = (page * 9) - 9;
+   const endIndex = page * 9;
    let studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
 
@@ -28,16 +28,48 @@ const displayStudents = (list, page) =>{
          studentList.insertAdjacentHTML('beforeend', item);
       }
    }
-   console.log(studentList);
 }
 
-displayStudents(data, 1);
+showPage(data, 1);
+
+const paginationButtons = (list) =>{
+
+   const numberOfButtons = Math.floor(list.length / 9) + 1;
+   let linkList = document.querySelector('.link-list');
+   linkList.innerHTML = '';
+   
+   for(let i = 1 ; i <= numberOfButtons ; i++){
+      let button = ` 
+      <li>
+         <button type="button">${[i]}</button>
+      </li>`
+      linkList.insertAdjacentHTML('beforeend', button);
+   }
+   // Select the first pagination button and give it a class name of active.
+   let name = document.querySelector('button');
+   name.className = 'active';
+
+   // Create an event listener to listen for clicks on the link-list 
+   // variable that you created earlier.
+   linkList.addEventListener('click', (event) => {
+
+   if (event.target.tagName == 'BUTTON') {
+      //Remove the active class from pagination button
+      let buttonClass = linkList.querySelector('.active');
+      buttonClass.className = '';
+
+      //Add the active class to the pagination button that fired the event
+      let activeButton = event.target;
+      activeButton.classList.add('active');
+
+   } 
+      let pageNumber = event.target.textContent;
+
+      showPage(list, pageNumber);
+    });
+}
 
 /*
-Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
-
-
-
-// Call functions
+paginationButtons(data);
