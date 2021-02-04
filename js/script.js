@@ -7,6 +7,19 @@ Author: Julie Branyan
 /*
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
+
+let header = document.querySelector('header');
+let searchBox = `<label for="search" class="student-search">
+               <input id="search" placeholder="Search by name...">
+               <button type="button" id="submit"><img src="img/icn-search.svg" alt="Search icon"></button>
+            </label>`;
+
+header.insertAdjacentHTML('beforeend', searchBox);
+
+const search = document.querySelector('#search');
+const submit = document.querySelector('#submit');
+
+
 const showPage = (list, page) =>{
    const startIndex = (page * 9) - 9;
    const endIndex = page * 9;
@@ -73,3 +86,49 @@ const paginationButtons = (list) =>{
 This function will create and insert/append the elements needed for the pagination buttons
 */
 paginationButtons(data);
+
+
+const searchForStudents = (searchInput, list) =>{
+   console.log(searchInput);
+   console.log(list);
+   
+   for(let i = 0 ; i < list.length ; i++){
+      list[i].className = '';
+
+      if(searchInput.value.length != 0 && list[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase()) ){
+
+      }
+  // 1b. Loop over the `names` parameter
+    // 1c. Remove the 'match' class name from each `names[i]` 
+    // 1d. Create a conditional that checks two conditions:
+      // 1ca. If the `searchInput.value.length` does not equal the digit zero 
+      //AND `names[i].textContent.toLowerCase()` includes `searchInput.value.toLowerCase())`
+      // 1cb. Add the class name 'match` to `names[i]` 
+
+
+
+      
+   }
+   
+}
+
+/* submit listener */
+submit.addEventListener('click', (event) => {
+   event.preventDefault();
+ 
+   // Invoke your search function here - Arguments: search, tableCells
+  
+ 
+   // Helpful log statement to test function
+   console.log('Submit button is functional!');
+ });
+ 
+ /* submit listener */
+ search.addEventListener('keyup', () => {
+ 
+   // Invoke your search function here - Arguments: search, tableCells
+ 
+ 
+   // Helpful log statement to test function
+   console.log('Keyup event on the Search input is functional!');
+ });
