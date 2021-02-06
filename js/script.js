@@ -8,19 +8,6 @@ Author: Julie Branyan
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 
-let header = document.querySelector('header');
-let searchBox = `<label for="search" class="student-search">
-               <input id="search" placeholder="Search by name...">
-               <button type="button" id="submit"><img src="img/icn-search.svg" alt="Search icon"></button>
-            </label>`;
-
-header.insertAdjacentHTML('beforeend', searchBox);
-
-const search = document.querySelector('#search');
-const submit = document.querySelector('#submit');
-const buttons = document.querySelectorAll('#pagination-button');
-console.log(buttons);
-
 let listOfResults = [];
 
 const showPage = (list, page) =>{
@@ -58,34 +45,26 @@ const paginationButtons = (list) =>{
    for(let i = 1 ; i <= numberOfButtons ; i++){
       let button = ` 
       <li>
-         <button type="button" class = "pagination-button ${[i]}">${[i]}</button>
+         <button type="button">${[i]}</button>
       </li>`
       linkList.insertAdjacentHTML('beforeend', button);
    }
    // Select the first pagination button and give it a class name of active.
-   let name = document.getElementsByTagName("li")[0];
+   let name = document.querySelector('button');
    name.className = 'active';
 
    // Create an event listener to listen for clicks on the link-list 
    // variable that you created earlier.
    linkList.addEventListener('click', (event) => {
    
-   if (event.target.tagName == 'BUTTON') {
-      for(let i = 0 ; i < buttons.length ; i++){
-         buttons[i].classList.remove('active');
-         console.log(buttons[i]);
-         //Remove the active class from pagination button
-         
-         // let buttonClass = linkList.className;
-         // console.log(buttonClass);
-         // linkList.className = '';
-      }
-      
+      if (event.target.tagName == 'BUTTON') {
+         let buttonClass = linkList.querySelector('.active');
+         buttonClass.className = '';
+
+         let activeButton = event.target;
+         activeButton.classList.add('active');
+
    } 
-      //Add the active class to the pagination button that fired the event
-      let activeButton = event.target;
-      console.log(activeButton);
-      activeButton.classList.add('active');
 
       let pageNumber = event.target.textContent;
 
@@ -98,6 +77,16 @@ This function will create and insert/append the elements needed for the paginati
 */
 paginationButtons(data);
 
+let header = document.querySelector('header');
+let searchBox = `<label for="search" class="student-search">
+               <input id="search" placeholder="Search by name...">
+               <button type="button" id="submit"><img src="img/icn-search.svg" alt="Search icon"></button>
+            </label>`;
+
+header.insertAdjacentHTML('beforeend', searchBox);
+
+const search = document.querySelector('#search');
+const submit = document.querySelector('#submit');
 
 const searchForStudents = (searchInput, list) =>{
    listOfResults = [];
