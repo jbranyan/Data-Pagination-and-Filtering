@@ -13,7 +13,6 @@ let searchBox = `<label for="search" class="student-search">
 
 header.insertAdjacentHTML('beforeend', searchBox);
 
-
 const search = document.querySelector('#search');
 const submit = document.querySelector('#submit');
 
@@ -27,7 +26,7 @@ const showPage = (list, page) =>{
 
    let studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
-   
+
    //If the list contains students, create the student information to display on the page
    if(list.length !== 0){
       for(let i = 0 ; i < list.length ; i++){
@@ -62,35 +61,37 @@ const paginationButtons = (list) =>{
 
    //create pagination buttons based off of number of buttons 
    //needed for students displayed on the page
-   for(let i = 1 ; i <= numberOfButtons ; i++){
-      let button = ` 
-      <li>
-         <button type="button">${[i]}</button>
-      </li>`
-      linkList.insertAdjacentHTML('beforeend', button);
+   if(list.length !== 0){
+      for(let i = 1 ; i <= numberOfButtons ; i++){
+         let button = ` 
+         <li>
+            <button type="button">${[i]}</button>
+         </li>`
+         linkList.insertAdjacentHTML('beforeend', button);
+      }
+      // Set the first pagination button class name to active.
+      let firstButton = linkList.querySelector('button');
+      firstButton.className = 'active';
    }
-
-   // Set the first pagination button class name to active.
-   let name = linkList.querySelector('button');
-   name.className = 'active';
 
    // Event listener to listen for clicks pagination buttons
    linkList.addEventListener('click', (event) => {
+
       //Locate button with active class within link-list and remove active  
       if (event.target.tagName == 'BUTTON') {
-         let buttonClass = document.querySelector('.active');
-         buttonClass.classList.remove('active');
+         let activeButton = document.querySelector('.active');
+         activeButton.classList.remove('active');
 
          //Select the button that triggered the listener and set the class name to 'active
-         let activeButton = event.target;
-         activeButton.classList.add('active');
+         let setActivebutton = event.target;
+         setActivebutton.classList.add('active');
 
+         //Set the page number to pass to show page function
+         let pageNumber = event.target.textContent;
+   
+         showPage(list, pageNumber);
       } 
-      //Set the page number to pass to show page function
-      let pageNumber = event.target.textContent;
-
-      showPage(list, pageNumber);
-    });
+   });
 }
 
 paginationButtons(data);
@@ -109,17 +110,14 @@ const searchForStudents = (searchInput, list) =>{
    }
    showPage(searchResultsList,1);
 }
-
-
-/* submit listener */
+  /* submit listener */
 submit.addEventListener('click', (event) => {
    event.preventDefault();
- 
-   searchForStudents(search,data);
-   paginationButtons(data);
 
+   searchForStudents(search,data);
+   paginationButtons(searchResultsList);
  });
- 
+
  /* search keyup listener */
  search.addEventListener('keyup', () => {
  
