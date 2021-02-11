@@ -5,8 +5,8 @@ Author: Julie Branyan
 */
 
 //Place the search results box on the page within the html header
-let header = document.querySelector('header');
-let searchBox = `<label for="search" class="student-search">
+const header = document.querySelector('header');
+const searchBox = `<label for="search" class="student-search">
                      <input id="search" placeholder="Search by name...">
                      <button type="button" id="submit"><img src="img/icn-search.svg" alt="Search icon"></button>
                   </label>`;
@@ -24,17 +24,17 @@ const showPage = (list, page) =>{
    const startIndex = (page * 9) - 9;
    const endIndex = page * 9;
 
-   let studentList = document.querySelector('.student-list');
+   const studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
 
    //If the list contains students, create the student information to display on the page
    if(list.length !== 0){
       for(let i = 0 ; i < list.length ; i++){
          if(startIndex <= i && i < endIndex ){
-            let studentItem = `<li class=student-item cf>
+            const studentItem = `<li class=student-item cf>
                <div class="student-details">
                   <img class="avatar" src="${list[i].picture.thumbnail}" alt="Profile Picture">
-                  <h3>${list[i].name.first}</h3>
+                  <h3>${list[i].name.first} ${list[i].name.last}</h3>
                   <span class="email">${list[i].email}</span>
                </div>
                <div class="joined-details">
@@ -56,21 +56,21 @@ showPage(data, 1);
 const paginationButtons = (list) =>{
 
    const numberOfButtons = Math.floor(list.length / 9) + 1;
-   let linkList = document.querySelector('.link-list');
+   const linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
 
    //create pagination buttons based off of number of buttons 
    //needed for students displayed on the page
    if(list.length !== 0){
       for(let i = 1 ; i <= numberOfButtons ; i++){
-         let button = ` 
+         const button = ` 
          <li>
             <button type="button">${[i]}</button>
          </li>`
          linkList.insertAdjacentHTML('beforeend', button);
       }
       // Set the first pagination button class name to active.
-      let firstButton = linkList.querySelector('button');
+      const firstButton = linkList.querySelector('button');
       firstButton.className = 'active';
    }
 
@@ -79,15 +79,15 @@ const paginationButtons = (list) =>{
 
       //Locate button with active class within link-list and remove active  
       if (event.target.tagName == 'BUTTON') {
-         let activeButton = document.querySelector('.active');
+         const activeButton = document.querySelector('.active');
          activeButton.classList.remove('active');
 
          //Select the button that triggered the listener and set the class name to 'active
-         let setActivebutton = event.target;
+         const setActivebutton = event.target;
          setActivebutton.classList.add('active');
 
          //Set the page number to pass to show page function
-         let pageNumber = event.target.textContent;
+         const pageNumber = event.target.textContent;
    
          showPage(list, pageNumber);
       } 
@@ -110,7 +110,7 @@ const searchForStudents = (searchInput, list) =>{
    }
    showPage(searchResultsList,1);
 }
-  /* submit listener */
+// submit listener
 submit.addEventListener('click', (event) => {
    event.preventDefault();
 
@@ -118,7 +118,7 @@ submit.addEventListener('click', (event) => {
    paginationButtons(searchResultsList);
  });
 
- /* search keyup listener */
+//  search keyup listener
  search.addEventListener('keyup', () => {
  
    searchForStudents(search,data);
